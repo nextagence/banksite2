@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>NovaPay — Fintech (KZ)</title>
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>NovaPay</div>
+      </div>
+      <div class="nav">
+        <a class="pill active" href="./landing.html" data-i18n="nav_home">Главная</a>
+        <a class="pill" href="./deck.html" data-i18n="nav_deck">Инвест-питч</a>
+        <a class="pill" href="./app.html" data-i18n="nav_app">Кабинет</a>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="lang" style="display:flex;gap:6px;padding:6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.03);">
+          <button id="lang-ru" onclick="window.__setLang('ru')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">RU</button>
+          <button id="lang-kk" onclick="window.__setLang('kk')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">KZ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="card">
+        <span class="tag">Fintech • Cards • Payments • Crypto on/off-ramp</span>
+        <h1 style="margin-top:12px">NovaPay — продуктовый слой над лицензиями</h1>
+        <p class="muted">
+          Мы делаем UX: карты, переводы, выплаты и crypto on/off-ramp через партнёров.
+          Юридически — не банк.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+          <a class="btn" href="#lead">Оставить заявку</a>
+          <a class="btn ghost" href="./app.html">Открыть демо</a>
+        </div>
+        <div class="legal" data-i18n="legal"></div>
+      </div>
+
+      <div class="card soft" id="lead">
+        <h2 data-i18n="lead_title">Запросить ранний доступ</h2>
+        <p class="muted" data-i18n="lead_sub"></p>
+
+        <form id="leadForm" class="grid" style="gap:10px;margin-top:10px">
+          <div class="field">
+            <label data-i18n="name">Имя</label>
+            <input name="name" required placeholder="Zak"/>
+          </div>
+          <div class="field">
+            <label data-i18n="contact">Телефон или Telegram</label>
+            <input name="contact" required placeholder="@username / +7..."/>
+          </div>
+          <div class="field">
+            <label data-i18n="role">Роль/компания</label>
+            <input name="role" placeholder="Founder / Partner / Investor"/>
+          </div>
+          <div class="field">
+            <label data-i18n="note">Комментарий</label>
+            <input name="note" placeholder="Что нужно: карты / выплаты / крипто..."/>
+          </div>
+
+          <button class="btn" type="submit" data-i18n="send">Отправить</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"><div class="t" id="toastT"></div><div class="s" id="toastS"></div></div>
+
+  <script type="module">
+    import {applyI18n, setLang, t} from "./i18n.js";
+    window.__setLang = setLang;
+
+    function toast(title, msg){
+      const el = document.getElementById("toast");
+      document.getElementById("toastT").textContent = title;
+      document.getElementById("toastS").textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__tt);
+      window.__tt = setTimeout(()=>el.classList.remove("show"), 2600);
+    }
+
+    applyI18n();
+
+    // Demo submit: no Telegram / no backend
+    document.getElementById("leadForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      toast("OK", t("sent_ok"));
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

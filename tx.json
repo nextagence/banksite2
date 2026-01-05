@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-01-05",
+    "type": "Topup",
+    "amount": 50000,
+    "status": "ok"
+  },
+  {
+    "date": "2026-01-05",
+    "type": "Card payment",
+    "amount": -12990,
+    "status": "ok"
+  },
+  {
+    "date": "2026-01-04",
+    "type": "P2P sent",
+    "amount": -25000,
+    "status": "pending"
+  }
+]

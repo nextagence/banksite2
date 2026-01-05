@@ -1,0 +1,16 @@
+{
+  "user": {
+    "name": "Zak"
+  },
+  "kyc": "NOT_VERIFIED",
+  "balanceKZT": 312450,
+  "balanceUSDT": 118.5,
+  "card": {
+    "issued": false,
+    "frozen": false,
+    "scheme": "VISA",
+    "last4": "",
+    "daily": 500000,
+    "single": 150000
+  }
+}

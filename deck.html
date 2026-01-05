@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>NovaPay — Investor Deck</title>
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="logo"></div><div>NovaPay</div></div>
+      <div class="nav">
+        <a class="pill" href="./landing.html" data-i18n="nav_home">Главная</a>
+        <a class="pill active" href="./deck.html" data-i18n="nav_deck">Инвест-питч</a>
+        <a class="pill" href="./app.html" data-i18n="nav_app">Кабинет</a>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="lang" style="display:flex;gap:6px;padding:6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.03);">
+          <button id="lang-ru" onclick="window.__setLang('ru')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">RU</button>
+          <button id="lang-kk" onclick="window.__setLang('kk')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">KZ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="card">
+      <span class="tag">Investor Deck • One-pager</span>
+      <h1 style="margin-top:12px">NovaPay: финтех-интерфейс к деньгам для KZ</h1>
+      <p class="muted">
+        Продуктовый слой над лицензированными партнёрами: карты, переводы, выплаты и crypto on/off-ramp.
+        Лицензия — у партнёра, UX + пользователь — у нас.
+      </p>
+
+      <div class="grid grid-3" style="margin-top:12px">
+        <div class="card soft"><h3>Проблема</h3><p class="muted">Сложный UX, фрагментированные сервисы, бизнесу больно с выплатами.</p></div>
+        <div class="card soft"><h3>Решение</h3><p class="muted">One app: cards + payments + payouts + on/off-ramp через партнёров.</p></div>
+        <div class="card soft"><h3>Доход</h3><p class="muted">Tx fee, FX-спред, подписка, B2B payouts API.</p></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:12px">
+        <div class="card soft">
+          <h3>Roadmap</h3>
+          <p class="muted">MVP → партнёр → карты → payouts → масштаб по GEO/партнёрам.</p>
+        </div>
+        <div class="card soft">
+          <h3>Потребность</h3>
+          <p class="muted">Партнёр (банк/платёжка/процессинг) или pre-seed на интеграции и комплаенс.</p>
+          <a class="btn small" href="./landing.html#lead">Оставить контакт</a>
+        </div>
+      </div>
+
+      <div class="legal" data-i18n="legal"></div>
+    </div>
+  </main>
+
+  <script type="module">
+    import {applyI18n, setLang} from "./i18n.js";
+    window.__setLang = setLang;
+    applyI18n();
+  </script>
+</body>
+</html>

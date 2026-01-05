@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>NovaPay — Кабинет</title>
+  <link rel="stylesheet" href="./styles.css"/>
+  <style>
+    .dash{display:grid;gap:16px;grid-template-columns:260px 1fr;align-items:start}
+    @media (max-width:980px){.dash{grid-template-columns:1fr}}
+    .menu{display:flex;flex-direction:column;gap:8px}
+    .menu button{
+      width:100%;text-align:left;padding:12px 12px;border-radius:14px;
+      border:1px solid var(--stroke);background:rgba(255,255,255,.03);
+      color:var(--text);font-weight:800;cursor:pointer;
+    }
+    .menu button.active{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.10);color:#bfdbfe}
+    .kpi{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--stroke)}
+    .kpi .label{color:var(--muted);font-size:12px;font-weight:800}
+    .kpi .value{font-size:22px;font-weight:950}
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .table th{color:var(--muted);font-size:12px;font-weight:800;text-align:left;padding:0 10px 6px}
+    .row{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
+    .row td{padding:12px 10px;font-size:13px}
+    .status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--stroke);background:rgba(255,255,255,.03)}
+    .ok{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10);color:var(--accent2)}
+    .pending{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:#fcd34d}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="logo"></div><div>NovaPay</div></div>
+      <div class="nav">
+        <a class="pill" href="./landing.html" data-i18n="nav_home">Главная</a>
+        <a class="pill" href="./deck.html" data-i18n="nav_deck">Инвест-питч</a>
+        <a class="pill active" href="./app.html" data-i18n="nav_app">Кабинет</a>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="lang" style="display:flex;gap:6px;padding:6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.03);">
+          <button id="lang-ru" onclick="window.__setLang('ru')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">RU</button>
+          <button id="lang-kk" onclick="window.__setLang('kk')" style="border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer">KZ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="card">
+      <span class="tag">Demo • Кабинет</span>
+      <h2 style="margin-top:10px">Личный кабинет</h2>
+      <p class="muted">Данные тянутся из <span class="mono">/api/state.json</span> и <span class="mono">/api/tx.json</span>.</p>
+      <div class="legal" data-i18n="legal"></div>
+    </div>
+
+    <div class="dash" style="margin-top:14px">
+      <div class="card">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+          <div class="logo" style="width:30px;height:30px"></div>
+          <div>
+            <div style="font-weight:950" id="userName">—</div>
+            <div class="muted" style="font-size:12px" id="userKyc">—</div>
+          </div>
+        </div>
+
+        <div class="menu">
+          <button class="active" data-tab="overview" onclick="setTab('overview')">Обзор</button>
+          <button data-tab="tx" onclick="setTab('tx')">Операции</button>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn small ghost" onclick="reloadData()">Обновить данные</button>
+        </div>
+      </div>
+
+      <div class="grid" style="gap:14px">
+        <div class="card" id="tab-overview">
+          <div class="grid grid-3">
+            <div class="kpi"><div class="label">Баланс</div><div class="value" id="balKZT">—</div><div class="muted" style="font-size:12px">KZT</div></div>
+            <div class="kpi"><div class="label">USDT</div><div class="value" id="balUSDT">—</div><div class="muted" style="font-size:12px">demo</div></div>
+            <div class="kpi"><div class="label">Карта</div><div class="value" id="card">—</div><div class="muted" style="font-size:12px">VISA/MC через партнёра</div></div>
+          </div>
+        </div>
+
+        <div class="card" id="tab-tx" style="display:none">
+          <h3>Последние операции</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Дата</th><th>Тип</th><th>Сумма</th><th>Статус</th></tr>
+            </thead>
+            <tbody id="txBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"><div class="t" id="toastT"></div><div class="s" id="toastS"></div></div>
+
+  <script type="module">
+    import {applyI18n, setLang} from "./i18n.js";
+    window.__setLang = setLang;
+    applyI18n();
+  </script>
+  <script src="./app.js"></script>
+</body>
+</html>
